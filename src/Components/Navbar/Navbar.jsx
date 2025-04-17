@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
+  const {user, logout} = useContext(AuthContext)
+
+    // functions for toogle theme 
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -17,6 +21,19 @@ const Navbar = () => {
       setTheme("light");
     }
   };
+
+
+//   logout funtions
+
+const handleLogout = () => {
+    logout()
+    .then()
+    .catch(error => console.error(error)
+    )
+}
+
+
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -69,7 +86,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={'/login'} className="btn">Login</Link>
+        {user ? <button onClick={handleLogout} className="btn">Logout</button> : <Link to={'/login'} className="btn">Login</Link>}
 
         {/* Toggle Theme */}
         <label className="grid ml-4 cursor-pointer place-items-center">

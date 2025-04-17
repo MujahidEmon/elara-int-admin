@@ -1,13 +1,14 @@
-import { StrictMode } from 'react'
+import { StrictMode, useContext } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './Pages/Root/Root.jsx'
 import Home from './Pages/Home/Home.jsx'
-import AuthProvider from './Provider/AuthProvider.jsx'
+import AuthProvider, { AuthContext } from './Provider/AuthProvider.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Orders from './Pages/Orders/Orders.jsx'
 import AddProduct from './Pages/AddProduct/AddProduct.jsx'
+import PrivateRoutes from './Routes/PrivateRoutes.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,11 +17,11 @@ const router = createBrowserRouter([
     children: [
       {
         path:'/',
-        element: <Orders></Orders>
+        element: <PrivateRoutes><Orders></Orders></PrivateRoutes>
       },
       {
         path: '/addProduct',
-        element: <AddProduct></AddProduct>
+        element: <PrivateRoutes><AddProduct></AddProduct></PrivateRoutes>
       },
       {
         path: '/login',

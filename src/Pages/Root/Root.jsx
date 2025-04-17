@@ -1,13 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Login from "../Login/Login";
 
 const Root = () => {
+    const {user} = useContext(AuthContext)
     return (
         <div>
             <Navbar></Navbar>
-            <div className="lg:max-w-7xl max-w-lg mx-auto"> 
+            {user ? <div className="lg:max-w-7xl max-w-lg mx-auto"> 
                 <Outlet></Outlet>   
-            </div>
+            </div> : <Login></Login>}
         </div>
     );
 };
