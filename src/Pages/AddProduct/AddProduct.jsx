@@ -1,14 +1,43 @@
+import axios from "axios";
 import React from "react";
 
 const AddProduct = () => {
+// Post Request
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const form = new FormData(e.currentTarget)
+        const productName = form.get('ProductName')
+        const category = form.get('category')
+        const price = form.get('price')
+        const image = form.get('image')
+        const sku = form.get('sku')
+        const description = form.get('description')
+        const stock = form.get('stock')
 
-
+        console.log(productName, category, price, image,sku, stock,description);
+        axios({
+            method: 'post',
+            url: 'http://localhost:5000/products',
+            data: {
+              productName,
+              category,
+              price,
+              image,
+              sku,
+              stock,
+              description
+            }
+          })
+          .then(function(response){
+            console.log(response);
+          })
+    }
 
 
   return (
     <div>
         <h1 className="font-bold text-3xl mt-12 text-center">Add Product</h1>
-        <form className="max-w-4xl mx-auto px-6 my-6 mt-8 lg:mt-16">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto px-6 my-6 mt-8 lg:mt-16">
         <div className="grid sm:grid-cols-2 gap-10">
             {/* Product Name */}
             <div className="relative flex items-center">
@@ -17,6 +46,7 @@ const AddProduct = () => {
             </label>
             <input
                 type="text"
+                name="ProductName"
                 placeholder="Enter product name"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
             />
@@ -29,6 +59,7 @@ const AddProduct = () => {
             </label>
             <input
                 type="text"
+                name="category"
                 placeholder="Enter category"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
             />
@@ -41,6 +72,7 @@ const AddProduct = () => {
             </label>
             <input
                 type="text"
+                name="price"
                 placeholder="Enter price"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
             />
@@ -53,6 +85,7 @@ const AddProduct = () => {
             </label>
             <input
                 type="number"
+                name="stock"
                 placeholder="Enter stock quantity"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
             />
@@ -65,6 +98,7 @@ const AddProduct = () => {
             </label>
             <input
                 type="text"
+                name="sku"
                 placeholder="Enter product code"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
             />
@@ -77,6 +111,7 @@ const AddProduct = () => {
             </label>
             <input
                 type="text"
+                name="image"
                 placeholder="Enter image URL"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none"
             />
@@ -89,6 +124,7 @@ const AddProduct = () => {
             </label>
             <textarea
                 placeholder="Enter product description"
+                name="description"
                 className="px-2 pt-5 pb-2 pr-8 bg-base-100 w-full text-sm border-b-2 border-gray-100 focus:border-[#333] outline-none resize-none"
                 rows={2}
             ></textarea>
