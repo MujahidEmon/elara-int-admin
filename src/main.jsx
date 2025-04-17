@@ -9,6 +9,9 @@ import Login from './Pages/Login/Login.jsx'
 import Orders from './Pages/Orders/Orders.jsx'
 import AddProduct from './Pages/AddProduct/AddProduct.jsx'
 import PrivateRoutes from './Routes/PrivateRoutes.jsx'
+import PendingOrder from './Pages/PendingOrders/PendingOrder.jsx'
+import CanceledOrders from './Pages/CanceledOrders/CanceledOrders.jsx'
+import ConfirmedOrders from './Pages/ConfirmedOrders/ConfirmedOrders.jsx'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +20,21 @@ const router = createBrowserRouter([
     children: [
       {
         path:'/',
-        element: <PrivateRoutes><Orders></Orders></PrivateRoutes>
+        element: <PrivateRoutes><Orders></Orders></PrivateRoutes>,
+        children: [
+          {
+            path:'/pending',
+            element: <PendingOrder></PendingOrder>
+          },
+          {
+            path:'/confirmed',
+            element: <ConfirmedOrders></ConfirmedOrders>
+          },
+          {
+            path:'canceled',
+            element:<CanceledOrders></CanceledOrders>
+          }
+        ]
       },
       {
         path: '/addProduct',
