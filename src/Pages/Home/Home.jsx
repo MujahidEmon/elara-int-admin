@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
     return (
         <div>
-            <h1>Hello From HomePage</h1>
+            <h1>From HomePage</h1>
         </div>
     );
 };

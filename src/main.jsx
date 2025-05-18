@@ -1,10 +1,18 @@
-import { StrictMode } from 'react'
+import { StrictMode, useContext } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Root from './Pages/Root/Root.jsx'
 import Home from './Pages/Home/Home.jsx'
-import AuthProvider from './Provider/AuthProvider.jsx'
+import AuthProvider, { AuthContext } from './Provider/AuthProvider.jsx'
+import Login from './Pages/Login/Login.jsx'
+import Orders from './Pages/Orders/Orders.jsx'
+import AddProduct from './Pages/AddProduct/AddProduct.jsx'
+import PrivateRoutes from './Routes/PrivateRoutes.jsx'
+import PendingOrder from './Pages/PendingOrders/PendingOrder.jsx'
+import CanceledOrders from './Pages/CanceledOrders/CanceledOrders.jsx'
+import ConfirmedOrders from './Pages/ConfirmedOrders/ConfirmedOrders.jsx'
+import OrderEditPage from './Pages/OrderEditPage/OrderEditPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -13,7 +21,35 @@ const router = createBrowserRouter([
     children: [
       {
         path:'/',
-        element: <Home></Home>
+        element: <PrivateRoutes><Orders></Orders></PrivateRoutes>,
+        children: [
+          {
+            path:'/pending',
+            element: <PendingOrder></PendingOrder>
+          },
+          {
+            path:'/confirmed',
+            element: <ConfirmedOrders></ConfirmedOrders>
+          },
+          {
+            path:'canceled',
+            element:<CanceledOrders></CanceledOrders>
+          }
+        ]
+      },
+      {
+        path: '/addProduct',
+        element: <PrivateRoutes><AddProduct></AddProduct></PrivateRoutes>
+      },
+      {
+        path: '/login',
+        element: <Login></Login>
+      },
+      {
+        path: '/editOrder/:id',
+        element: <OrderEditPage></OrderEditPage>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/orders/${params.id}`)
       }
     ]
   }
