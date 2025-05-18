@@ -1,27 +1,31 @@
+import { useContext } from "react";
 import TableRow from "../../Components/TableRow/TableRow";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const PendingOrder = () => {
+  const {orders} = useContext(AuthContext);
   return (
-    <div class="overflow-x-auto mt-7">
-      <table class="min-w-full bg-white">
-      <thead class="bg-[#FCAB35] whitespace-nowrap">
+    <div className="overflow-x-auto mt-7">
+      <table className="min-w-full bg-white">
+      <thead className="bg-[#FCAB35] whitespace-nowrap">
           <tr>
-            <th class="p-4 text-left text-sm font-medium text-white">Name</th>
-            <th class="p-4 text-left text-sm font-medium text-white">Email</th>
-            <th class="p-4 text-left text-sm font-medium text-white">Role</th>
-            <th class="p-4 text-left text-sm font-medium text-white">
-              Joined At
+            <th className="p-4 text-left text-sm font-medium text-white">Name</th>
+            <th className="p-4 text-left text-sm font-medium text-white">Email</th>
+            <th className="p-4 text-left text-sm font-medium text-white">Phone</th>
+            <th className="p-4 text-left text-sm font-medium text-white">
+              Products
             </th>
-            <th class="p-4 text-left text-sm font-medium text-white">
+            <th className="p-4 text-left text-sm font-medium text-white">
+              Total Price
+            </th>
+            <th className="p-4 text-left text-sm font-medium text-white">
               Actions
             </th>
           </tr>
         </thead>
 
-        <tbody class="whitespace-nowrap">
-          <TableRow></TableRow>
-          <TableRow></TableRow>
-          <TableRow></TableRow>
+        <tbody className="whitespace-nowrap">
+          {orders.map((order) => <TableRow key={order._id} order={order}></TableRow>)}
         </tbody>
       </table>
     </div>

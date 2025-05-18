@@ -6,6 +6,7 @@ export const AuthContext = createContext(null)
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [orders, setOrders] = useState([])
 
     // login function with firebase
     const login = (email, password) => {
@@ -32,11 +33,24 @@ const AuthProvider = ({children}) => {
         }
     }, [])
 
+
+    // fetching orders
+
+    useEffect(() => {
+        fetch('http://localhost:5000/orders')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            setOrders(data)
+        })
+    }, [])
+
     const AuthInfo = {
         user,
         login,
         logout,
-        loading
+        loading,
+        orders
     }
     return (
         <AuthContext.Provider value={AuthInfo}>

@@ -12,6 +12,7 @@ import PrivateRoutes from './Routes/PrivateRoutes.jsx'
 import PendingOrder from './Pages/PendingOrders/PendingOrder.jsx'
 import CanceledOrders from './Pages/CanceledOrders/CanceledOrders.jsx'
 import ConfirmedOrders from './Pages/ConfirmedOrders/ConfirmedOrders.jsx'
+import OrderEditPage from './Pages/OrderEditPage/OrderEditPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,12 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login></Login>
+      },
+      {
+        path: '/editOrder/:id',
+        element: <OrderEditPage></OrderEditPage>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/orders/${params.id}`)
       }
     ]
   }
