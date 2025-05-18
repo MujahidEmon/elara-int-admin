@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const PendingOrder = () => {
   // const {orders} = useContext(AuthContext);
-  const url = `http://localhost:5000/orders?status=Pending`;
+  const url = `https://elara-international-server.onrender.com/orders?status=Pending`;
   const [orders, setOrders] = useState([])
     // console.log(orders);
     useEffect(() => {
@@ -33,7 +33,7 @@ const PendingOrder = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/orders/${_id}`, {
+                fetch(`https://elara-international-server.onrender.com/orders/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

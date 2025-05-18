@@ -7,7 +7,9 @@ const PrivateRoutes = ({children}) => {
     const {user, loading} = useContext(AuthContext)
 
     if(loading){
-        return <HashLoader></HashLoader>
+        return <div className="flex justify-center items-center h-screen">
+            <HashLoader color="#FCAB35" />
+        </div>
     }
     if(user){
         return <Navigate to={'/orders'}></Navigate> && children;

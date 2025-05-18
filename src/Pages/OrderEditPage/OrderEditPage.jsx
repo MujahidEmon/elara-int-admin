@@ -27,7 +27,7 @@ const OrderEditPage = () => {
 
 
     // Sending data to Server
-    fetch(`http://localhost:5000/orders/${order._id}`, {
+    fetch(`https://elara-international-server.onrender.com/orders/${order._id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json'

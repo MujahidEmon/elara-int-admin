@@ -37,7 +37,7 @@ const AuthProvider = ({children}) => {
     // fetching orders
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders')
+        fetch('https://elara-international-server.onrender.com/orders')
         .then(res => res.json())
         .then(data => {
             console.log(data);
@@ -49,12 +49,12 @@ const AuthProvider = ({children}) => {
 
 //   const handleRemoveFromCart = (_id) => {
 //     if (user) {
-//       fetch(`http://localhost:5000/orders/${_id}`, {
+//       fetch(`https://elara-international-server.onrender.com/orders/${_id}`, {
 //         method: "DELETE",
 //       })
 //         .then((res) => res.json())
 //         .then(() => {
-//           axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+//           axios.get(`https://elara-international-server.onrender.com/cartProducts/${user.email}`)
 //             .then(res => setCartProducts(res.data));
 //         });
 //     } else {
@@ -66,12 +66,12 @@ const AuthProvider = ({children}) => {
 
   const handleIncrease = (product) => {
     if (user) {
-      fetch(`http://localhost:5000/cartProducts/increase/${product._id}`, {
+      fetch(`https://elara-international-server.onrender.com/cartProducts/increase/${product._id}`, {
         method: "PATCH",
       })
         .then((res) => res.json())
         .then(() => {
-          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+          axios.get(`https://elara-international-server.onrender.com/cartProducts/${user.email}`)
             .then(res => setCartProducts(res.data))
             .catch(err => console.log(err));
         });
@@ -83,12 +83,12 @@ const AuthProvider = ({children}) => {
 
   const handleDecrease = (product) => {
     if (user) {
-      fetch(`http://localhost:5000/cartProducts/decrease/${product._id}`, {
+      fetch(`https://elara-international-server.onrender.com/cartProducts/decrease/${product._id}`, {
         method: "PATCH",
       })
         .then((res) => res.json())
         .then(() => {
-          axios.get(`http://localhost:5000/cartProducts/${user.email}`)
+          axios.get(`https://elara-international-server.onrender.com/cartProducts/${user.email}`)
             .then(res => setCartProducts(res.data))
             .catch(err => console.log(err));
         });
