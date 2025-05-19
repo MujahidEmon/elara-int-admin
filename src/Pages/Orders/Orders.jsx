@@ -9,11 +9,11 @@ const Orders = () => {
     const [activeTab, setActiveTab] = useState("home");
   return (
     <div className="p-4">
-      <ul className="flex">
+      <ul className="flex md:text-lg text-xs">
         <Link to={'/pending'}
           id="homeTab"
           onClick={() => setActiveTab("home")}
-          className={`tab font-semibold text-[15px] text-center py-3 px-6 border-b-2 cursor-pointer transition-all ${
+          className={`tab font-semibold md:text-[15px] text-[12px] text-center py-3 md:px-6 px-4 border-b-2 cursor-pointer transition-all ${
             activeTab === "home"
               ? "text-blue-700 bg-gray-50 border-[#FCAB35]"
               : "text-slate-600 hover:bg-gray-50 border-transparent"
@@ -24,7 +24,7 @@ const Orders = () => {
         <li
           id="contentTab"
           onClick={() => setActiveTab("content")}
-          className={`tab font-semibold text-[15px] text-center py-3 px-6 border-b-2 cursor-pointer transition-all ${
+          className={`tab font-semibold md:text-[15px] text-[12px] text-center py-3 md:px-6 px-4 border-b-2 cursor-pointer transition-all ${
             activeTab === "content"
               ? "text-blue-700 bg-gray-50 border-[#FCAB35]"
               : "text-slate-600 hover:bg-gray-50 border-transparent"
@@ -35,7 +35,7 @@ const Orders = () => {
         <li
           id="profileTab"
           onClick={() => setActiveTab("profile")}
-          className={`tab font-semibold text-[15px] text-center py-3 px-6 border-b-2 cursor-pointer transition-all ${
+          className={`tab font-semibold md:text-[15px] text-[12px] text-center py-3 md:px-6 px-4 border-b-2 cursor-pointer transition-all ${
             activeTab === "profile"
               ? "text-blue-700 bg-gray-50 border-[#FCAB35]"
               : "text-slate-600 hover:bg-gray-50 border-transparent"
