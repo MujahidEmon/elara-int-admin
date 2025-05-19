@@ -1,212 +1,232 @@
 import { useContext } from "react";
 import { GiConfirmed } from "react-icons/gi";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import OrderCard from "../../Components/OrderCard/OrderCard";
+import Swal from "sweetalert2";
 
 const OrderEditPage = () => {
-const {orders} = useContext(AuthContext)
+  const { orders } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const order = useLoaderData()
+  console.log(order);
+  const handleUpdateOrder = e => {
+    e.preventDefault();
 
-const order = useLoaderData()
-console.log(order);
+    const form = new FormData(e.currentTarget);
+
+    const name = form.get("name");
+    const phone = form.get("phone");
+    const email = form.get("email");
+    const address = form.get("address");
+    const note = form.get("note");
+    const status = form.get('status')
+
+    const updatedOrder = { name, note, status, phone, email }
+    console.log(updatedOrder);
+
+
+    // Sending data to Server
+    fetch(`https://elara-international-server.onrender.com/orders/${order._id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedOrder)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          Swal.fire({
+            title: 'Order Details Updated Successfully',
+            // text: 'Do you want to continue',
+            icon: 'success',
+            confirmButtonText: 'Back'
+          })
+            .then(result => {
+              if (result.isConfirmed) {
+                navigate(-1)
+              }
+            })
+        }
+      })
+  }
 
   return (
     <div>
-      <section className="bg-[url('https://i.ibb.co.com/fNtQhMV/1.png')] bg-no-repeat bg-cover font-raleway py-8 antialiased md:py-16">
+      <section
+        className="relative bg-no-repeat bg-cover font-raleway  antialiased min-h-screen"
+
+      >
+        {/* Dark overlay on background image */}
+        {/* <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div> */}
+
         <form
-          action="#"
-        //   onSubmit={handlePlaceOrder}
-          className="mx-auto max-w-screen-xl px-4 2xl:px-0"
+          onSubmit={handleUpdateOrder}
+          className="relative mx-auto max-w-screen-xl px-6 sm:px-10"
         >
-          <div className="mt-6 sm:mt-8 flex lg:flex-row flex-col-reverse lg:items-start lg:gap-12 xl:gap-16">
-            <div className="min-w-0 flex-1 space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-900">
-                  Delivery Details
-                </h2>
+          <div className="rounded-2xl  bg-opacity-70 backdrop-blur-md shadow-lg  sm:p-12">
+            <h1 className="text-center text-base-400 text-4xl  mb-8">
+              Order for {order.name}
+            </h1>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="your_name"
-                      className="mb-2 block text-sm font-medium text-gray-900"
-                    >
-                      Your name
-                    </label>
-                    <input
-                      type="text"
-                      id="your_name"
-                      name="name"
-                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                      placeholder="Bonnie Green"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="your_email"
-                      className="mb-2 block text-sm font-medium text-gray-900"
-                    >
-                      Your email*
-                    </label>
-                    <input
-                      type="email"
-                      id="your_email"
-                      name="email"
-                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                      placeholder="name@flowbite.com"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="phone-input-3"
-                      className="mb-2 block text-sm font-medium text-gray-900"
-                    >
-                      Phone Number*
-                    </label>
-                    <div className="flex items-center">
-                      <div className="relative w-full">
-                        <input
-                          type="text"
-                          id="phone-input"
-                          name="phone"
-                          className="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                          pattern="[0-9]{11}"
-                          placeholder="01700000000"
-                          required
-                        />
-                      </div>
+            <div className="flex flex-col lg:flex-row gap-12">
+              {/* Left side - Delivery details */}
+              <div className="flex-1 space-y-8 text-base-400">
+                <div>
+                  <h2 className="text-2xl font-semibold mb-6">Delivery Details</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="your_name"
+                        className="block mb-2 text-sm font-medium"
+                      >
+                        Customer Name
+                      </label>
+                      <input
+                        type="text"
+                        id="your_name"
+                        name="name"
+                        defaultValue={order.name}
+                        placeholder="Bonnie Green"
+                        required
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                      />
                     </div>
-                  </div>
 
-                  <div>
-                    <label
-                      htmlFor="full_address"
-                      className="mb-2 block text-sm font-medium text-gray-900"
-                    >
-                      Full Address
-                    </label>
-                    <input
-                      type="text"
-                      id="full-address"
-                      name="address"
-                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                      placeholder="Enter Your Full Address"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="full_address"
-                      className="mb-2 block text-sm font-medium text-gray-900"
-                    >
-                      Total Price
-                    </label>
-                    <input
-                      type="text"
-                      id="full-address"
-                      name="address"
-                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                      placeholder="Enter Your Full Address"
-                      required
-                    />
-                  </div>
+                    <div>
+                      <label
+                        htmlFor="your_email"
+                        className="block mb-2 text-sm font-medium"
+                      >
+                        Your Email*
+                      </label>
+                      <input
+                        type="email"
+                        id="your_email"
+                        defaultValue={order.email}
+                        name="email"
+                        placeholder="name@example.com"
+                        required
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                      />
+                    </div>
 
-                  <div>
-                    <label
-                      htmlFor="note"
-                      className="mb-2 block text-sm font-medium text-gray-900"
-                    >
-                      Any Note?
-                    </label>
-                    <input
-                      type="text"
-                      id="vat_number"
-                      name="note"
-                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                      placeholder="Leave a note"
-                    />
-                  </div>
+                    <div>
+                      <label
+                        htmlFor="phone-input"
+                        className="block mb-2 text-sm font-medium"
+                      >
+                        Phone Number*
+                      </label>
+                      <input
+                        type="text"
+                        defaultValue={order.phone}
+                        id="phone-input"
+                        name="phone"
+                        pattern="[0-9]{11}"
+                        placeholder="01700000000"
+                        required
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                      />
+                    </div>
 
-                  <div className="sm:col-span-2">
-                    <button
-                      type="submit"
-                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100"
-                    >
-                      <GiConfirmed></GiConfirmed>
-                      Place Order
-                    </button>
-                  </div>
-                </div>
-              </div>
+                    <div>
+                      <label
+                        htmlFor="full_address"
+                        className="block mb-2 text-sm font-medium"
+                      >
+                        Full Address
+                      </label>
+                      <input
+                        type="text"
+                        id="full_address"
+                        name="address"
+                        defaultValue={order.address}
+                        placeholder="Enter Your Full Address"
+                        required
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                      />
+                    </div>
 
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-gray-900">Payment</h3>
+                    <div className="">
+                      <label
+                        htmlFor="note"
+                        className="block mb-2 text-sm font-medium"
+                      >
+                        Any Note?
+                      </label>
+                      <input
+                        type="text"
+                        defaultValue={order.note}
+                        id="note"
+                        name="note"
+                        placeholder="Leave a note"
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="note"
+                        className="mb-2 block text-sm font-medium text-gray-900"
+                      >
+                        Change Status
+                      </label>
+                      <select name="status" defaultValue={order.status} className="select block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500">
+                        <option disabled={true}>Select Status</option>
+                        <option >Pending</option>
+                        <option>Confirm</option>
+                        <option >Cancel</option>
+                      </select>
+                    </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                  <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4">
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="pay-on-delivery"
-                          aria-describedby="pay-on-delivery-text"
-                          type="radio"
-                          name="payment-method"
-                          value="selected"
-                          className="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-600"
-                        />
-                      </div>
-                      <div className="ms-4 text-sm">
-                        <label
-                          htmlFor="pay-on-delivery"
-                          className="font-medium leading-none text-gray-900"
-                        >
-                          Payment on delivery
-                        </label>
-                      </div>
+                    <div className="sm:col-span-2">
+                      <button
+                        type="submit"
+                        className="w-full flex items-center justify-center gap-3 rounded-lg bg-[#FCAB35] px-6 py-3 text-white text-lg font-semibold hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition"
+                      >
+                        <GiConfirmed size={22} />
+                        Update Order
+                      </button>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* <div className="sticky top-0 ms-0  w-full max-w-md lg:block">
-              <div className="rounded-lg border border-gray-200 bg-white p-6">
-                <h2 className="mb-5 text-lg font-semibold text-gray-900">
-                  Order summary
-                </h2>
-                <ul className="mb-5 space-y-3">
-                  {cartCoffees.map((c, idx) => (
-                    <CartCard coffee={c} key={idx}></CartCard>
+
+              </div>
+
+              {/* Right side - Order summary */}
+              <div className="w-full max-w-md rounded-2xl p-8 shadow-lg bg-opacity-70 text-base-400">
+                <h2 className="text-2xl font-semibold mb-6">Order Summary</h2>
+                <ul className="space-y-4 mb-6 max-h-[400px] overflow-y-auto">
+                  {order.cartProducts.map((product) => (
+                    <OrderCard product={product} key={product.id} />
                   ))}
                 </ul>
 
-                <ul className="mt-4 space-y-1 text-gray-600">
-                  <li className="flex items-center justify-between">
+                <div className="space-y-3 text-base-400 text-sm">
+                  <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span className="text-gray-900">BDT {totalPrice}</span>
-                  </li>
-
-                  <li className="flex items-center justify-between">
-                    <span>Shipping</span>
-                    <span className="text-gray-900">BDT {50}</span>
-                  </li>
-                </ul>
-
-                <div className="mt-6 border-t border-gray-200 pt-4">
-                  <div className="flex items-center justify-between text-sm font-medium text-gray-900">
-                    <span>Total</span>
-                    <span className="text-xl">BDT {grandTotal}</span>
+                    <span>BDT {order.totalPrice}</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>BDT 50</span>
+                  </div>
+                </div>
 
-                  <p className="mt-1 text-xs text-gray-500">
+                <div className="mt-6 border-t border-gray-700 pt-5 text-base-400">
+                  <div className="flex justify-between text-xl font-semibold">
+                    <span>Total</span>
+                    <span>BDT {order.grandTotal}</span>
+                  </div>
+                  <p className="mt-2 text-sm text-base-400">
                     Shipping costs are calculated during checkout.
                   </p>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </form>
       </section>

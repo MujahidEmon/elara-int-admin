@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const TableRow = ({order}) => {
+const TableRow = ({order, handleDelete}) => {
   console.log(order._id);
   // console.log(updateOrder);
     return (
@@ -12,7 +12,7 @@ const TableRow = ({order}) => {
             </td>
             <td className="p-4 text-[15px] text-slate-600 font-medium">{order.phone}</td>
             <td className="p-4 text-[15px] text-slate-600 font-medium">
-              {order.cartProducts.map(o => <div>{o.productName}</div>)}
+              {order.cartProducts.map(o => <div>{o.productName} {o.quantity>1 ? <p>({o.quantity})</p>: <p></p>}</div>)}
             </td>
             <td className="p-4 text-[15px] text-slate-600 font-medium">
               {order.grandTotal}
@@ -37,7 +37,7 @@ const TableRow = ({order}) => {
                     </svg>
                   </Link>
                 </button>
-                <button title="Delete">
+                <button onClick={() => handleDelete(order._id)} title="Delete">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-5 h-5 fill-red-500 hover:fill-red-700"

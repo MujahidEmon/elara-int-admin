@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         path: '/editOrder/:id',
         element: <OrderEditPage></OrderEditPage>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/orders/${params.id}`)
+          fetch(`https://elara-international-server.onrender.com/orders/${params.id}`)
       }
     ]
   }

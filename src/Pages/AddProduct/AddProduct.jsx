@@ -39,7 +39,7 @@ const AddProduct = () => {
                 description,
             };
 
-            const res = await axios.post("http://localhost:5000/products", productData);
+            const res = await axios.post("https://elara-international-server.onrender.com/products", productData);
 
             console.log("Product added:", res.data);
 

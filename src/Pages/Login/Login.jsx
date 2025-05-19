@@ -134,12 +134,12 @@ const Login = () => {
                     <div className="mt-6">
                     <button className="btn font-rancho bg-[#FCAB35] text-xl w-full">Login</button>
 
-                    <p className="text-gray-800 text-sm text-center mt-2">
+                    {/* <p className="text-gray-800 text-sm text-center mt-2">
                         Don't have an account ?{" "}
                         <Link className="text-green-500 font-bold" to={"/register"}>
                         Register
                         </Link>
-                    </p>
+                    </p> */}
                     </div>
                 </div>
 
