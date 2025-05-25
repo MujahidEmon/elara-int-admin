@@ -7,7 +7,7 @@ const PrivateRoutes = ({children}) => {
     const {user, loading} = useContext(AuthContext)
 
     if(loading){
-        return <div className="flex justify-center items-center h-screen">
+        return <div className="flex justify-center bg-white items-center h-screen">
             <HashLoader color="#FCAB35" />
         </div>
     }

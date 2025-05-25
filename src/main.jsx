@@ -24,11 +24,11 @@ const router = createBrowserRouter([
         element: <PrivateRoutes><Orders></Orders></PrivateRoutes>,
         children: [
           {
-            path:'/pending',
+            path:'pending',
             element: <PendingOrder></PendingOrder>
           },
           {
-            path:'/confirmed',
+            path:'confirmed',
             element: <ConfirmedOrders></ConfirmedOrders>
           },
           {
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <PrivateRoutes><RouterProvider router={router}></RouterProvider></PrivateRoutes>
     </AuthProvider>
   </StrictMode>,
 )

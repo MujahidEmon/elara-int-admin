@@ -10,7 +10,7 @@ const Orders = () => {
   return (
     <div className="p-4">
       <ul className="flex md:text-lg text-xs">
-        <Link to={'/pending'}
+        <Link to={'pending'}
           id="homeTab"
           onClick={() => setActiveTab("home")}
           className={`tab font-semibold md:text-[15px] text-[12px] text-center py-3 md:px-6 px-4 border-b-2 cursor-pointer transition-all ${

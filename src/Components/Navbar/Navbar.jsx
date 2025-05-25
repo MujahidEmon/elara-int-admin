@@ -89,7 +89,7 @@ const handleLogout = () => {
         {user ? <button onClick={handleLogout} className="btn">Logout</button> : <Link to={'/login'} className="btn">Login</Link>}
 
         {/* Toggle Theme */}
-        <label className="grid ml-4 cursor-pointer place-items-center">
+        {/* <label className="grid ml-4 cursor-pointer place-items-center">
           <input
             onChange={handleTheme}
             type="checkbox"
@@ -124,7 +124,7 @@ const handleLogout = () => {
           >
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-        </label>
+        </label> */}
       </div>
     </div>
   );
