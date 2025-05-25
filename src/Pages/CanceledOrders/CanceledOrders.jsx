@@ -40,7 +40,7 @@ const CanceledOrders = () => {
         })
           .then(res => res.json())
           .then(data => {
-            console.log(data);
+            // console.log(data);
             if (data.deletedCount > 0) {
               Swal.fire({
                 title: "Deleted!",

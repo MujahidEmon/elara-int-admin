@@ -40,7 +40,7 @@ const AuthProvider = ({children}) => {
         fetch('https://elara-international-server.onrender.com/orders')
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             setOrders(data)
         })
     }, [])
