@@ -2,19 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import TableRow from "../../Components/TableRow/TableRow";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { HashLoader } from "react-spinners";
 
 const PendingOrder = () => {
   // const {orders} = useContext(AuthContext);
   const url = `https://elara-international-server.onrender.com/orders?status=Pending`;
   const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(true)
     // console.log(orders);
     useEffect(() => {
+        setLoading(true);
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                // setLoading(true);
                 setOrders(data);
-                // setLoading(false);
+                setLoading(false);
             })
     }, [])
 
@@ -57,7 +59,12 @@ const PendingOrder = () => {
     
   return (
     <div className="overflow-x-auto mt-7">
-      <table className="min-w-full bg-white">
+      {
+        loading ? <div className="min-h-screen flex items-center justify-center">
+            <HashLoader color="#FCAB35" size={60} />
+          </div>
+          :
+          <table className="min-w-full bg-white">
       <thead className="bg-[#FCAB35] whitespace-nowrap">
           <tr>
             <th className="p-4 text-left text-sm font-medium text-white">Name</th>
@@ -79,6 +86,7 @@ const PendingOrder = () => {
           {orders.map((order) => <TableRow key={order._id} order={order} handleDelete={handleDelete}></TableRow>)}
         </tbody>
       </table>
+      }
     </div>
   );
 };
